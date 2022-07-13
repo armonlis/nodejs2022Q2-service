@@ -1,3 +1,4 @@
+import { IAlbum } from "src/album/interfaces";
 import { IArtist } from "src/artist/interfaces"
 
 export interface IFavourites {
@@ -7,5 +8,6 @@ export interface IFavourites {
 };
 
 export interface IFavouritesResponse {
-  artists: IArtist[]
+  artists: IArtist[];
+  albums: IAlbum[];
 };

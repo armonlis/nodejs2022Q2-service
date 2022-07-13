@@ -20,6 +20,21 @@ export class FavouritesController {
     return;
   };
 
+  @Post("album/:id")
+  createFavouritesAlbum(@Param("id", ParseUUIDPipe) id: string) {
+    const result = this.favourites.addAlbum(id);
+    if (!result) { throw new UnprocessableEntityException("A such album does not exist.") }
+    return `The album ${result.name} was added to favourites.`
+  };
+
+  @Delete("album/:id")
+  @HttpCode(204)
+  deleteFavouritesAlbum(@Param("id", ParseUUIDPipe) id: string) {
+    const result = this.favourites.deleteAlbum(id);
+    if (!result) { throw new UnprocessableEntityException("A such album does not exist.") }
+    return;
+  };
+
   @Get()
   getFavourites() {
     return this.favourites.get();

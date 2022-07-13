@@ -1,6 +1,5 @@
 import { Injectable,  } from "@nestjs/common";
 import { v4 as uuid } from "uuid";
-import { IUser } from "./interfaces";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserPasswordDto } from "./dto/update-user.dto";
 import { ServiceResponses } from "src/constants/constants";

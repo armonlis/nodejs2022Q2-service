@@ -1,6 +1,5 @@
 import { Controller, Get, Param, ParseUUIDPipe, NotFoundException, Post, Body, Put, ForbiddenException, Delete, HttpCode, } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { IUser } from "./interfaces";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserPasswordDto } from "./dto/update-user.dto";
 import { ServiceResponses } from "src/constants/constants";
