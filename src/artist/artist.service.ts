@@ -1,11 +1,15 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject, forwardRef } from "@nestjs/common";
 import { IArtist } from "./interfaces";
 import { v4 as uuid } from "uuid";
 import { CreateArtistDTO } from "./DTO/create-artist.dto";
 import { ChangeArtistDTO } from "./DTO/change-artist.dto";
+import { FavouritesService } from "src/favourites/favourites.service";
 
 @Injectable()
 export class ArtistsService {
+
+  constructor(@Inject(forwardRef(() => FavouritesService)) private readonly favourites: FavouritesService) {};
+
   private readonly artists: IArtist[] = [];
   
   getAll(): IArtist[] {
@@ -33,8 +37,10 @@ export class ArtistsService {
 
   delete(id: string): boolean {
     const index = this.artists.findIndex(artist => artist.id === id);
+    if (index === -1) { return false }
     this.artists.splice(index, 1);
-    return index === -1 ? false : true;
+    this.favourites.deleteArtist(id);
+    return true;
   };
 
 };
