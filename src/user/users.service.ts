@@ -10,41 +10,52 @@ export class UsersService {
   
   private readonly users = [];
 
-  getAll(): IUser[] {
-    return this.users;
+  getAll() {
+    const users = this.users.map(user => {
+      const { login, id, createdAt, updatedAt, version } = user; 
+      return { login, id, createdAt, updatedAt, version }; 
+    });
+    return users;
   };
 
-  get(id: string): IUser {
-    return this.users.find(user => user.id === id);
+  get(indificator: string) {
+    const user = this.users.find(user => user.id === indificator);
+    if (!user) { return; }
+    const { login, id, createdAt, updatedAt, version } = user; 
+    return { login, id, createdAt, updatedAt, version }; 
   };
 
-  add(data: CreateUserDto): IUser  {
+  add(data: CreateUserDto) {
     const { login, password } = data;
+    const time = Date.now();
     const newUser = {
       login,
       password,
       id: uuid(),
       version: 1,
-      createdAt: Date.now(),
-      updatedAt: 0
+      createdAt: time,
+      updatedAt: time
     };
     this.users.push(newUser);
-    return newUser;
+    const { id, createdAt, updatedAt, version } = newUser; 
+    return { login, id, createdAt, updatedAt, version };
+    
   };
 
-  updatePassword(data: UpdateUserPasswordDto, id: string) {
+  updatePassword(data: UpdateUserPasswordDto, indificator: string) {
     const { oldPassword, newPassword } = data;
-    const user = this.users.find(user => user.id === id);
+    const user = this.users.find(user => user.id === indificator);
     if (user && user.password === oldPassword) {
       user.password = newPassword;
       user.version += 1;
       user.updatedAt = Date.now();
-      return user;
+      const { login, id, createdAt, updatedAt, version } = user; 
+      return { login, id, createdAt, updatedAt, version }; 
     }
     if (user && user.password !== oldPassword) {
       return ServiceResponses.WRONG_PASSWORD;
     }
-    return user;
+    return;
   };
 
   delete(id: string) {

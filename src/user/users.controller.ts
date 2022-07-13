@@ -11,24 +11,24 @@ export class UsersController {
   constructor(private users: UsersService) {};
 
   @Get() 
-  getAllUsers(): IUser[]  {
+  getAllUsers() {
     return this.users.getAll()
   };
 
   @Get(":id")
-  getUserById(@Param("id", ParseUUIDPipe) id: string): IUser {
+  getUserById(@Param("id", ParseUUIDPipe) id: string) {
     const user = this.users.get(id);
     if (!user) { throw new NotFoundException("User with a such id was not found.") }
     return user;
   };
 
   @Post()
-  addUser(@Body() createUserDto: CreateUserDto): IUser {
+  addUser(@Body() createUserDto: CreateUserDto) {
     return this.users.add(createUserDto);
   };
 
   @Put(":id")
-  changeUserPassword(@Body() updateUserPasswordDto: UpdateUserPasswordDto, @Param("id", ParseUUIDPipe) id: string): IUser {
+  changeUserPassword(@Body() updateUserPasswordDto: UpdateUserPasswordDto, @Param("id", ParseUUIDPipe) id: string) {
     const result = this.users.updatePassword(updateUserPasswordDto, id);
     if (!result) { throw new NotFoundException("User with a such id was not found.") }
     if (result === ServiceResponses.WRONG_PASSWORD) { throw new ForbiddenException("Wrong password. Access denied.") }

@@ -8,7 +8,7 @@ import { CreateArtistDTO } from "./DTO/create-artist.dto";
 import validateData from "./validator";
 import { ChangeArtistDTO } from "./DTO/change-artist.dto";
 
-@Controller("artists")
+@Controller("artist")
 export class ArtistsController {
   
   constructor(private artists: ArtistsService) {};
