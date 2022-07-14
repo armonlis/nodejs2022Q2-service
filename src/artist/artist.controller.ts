@@ -1,11 +1,7 @@
-import { Controller, Get, Param, HttpStatus, Res, Post, Body, Put, Delete } from "@nestjs/common";
+import { Controller, Get, Param, Post, Body, Put, Delete, ParseUUIDPipe, NotFoundException, HttpCode } from "@nestjs/common";
 import { ArtistsService } from "./artist.service";
 import { IArtist } from "./interfaces";
-import { validate } from "uuid";
-import { Response } from "express";
-import ResMessages from "../constants/resMessages";
 import { CreateArtistDTO } from "./DTO/create-artist.dto";
-import validateData from "./validator";
 import { ChangeArtistDTO } from "./DTO/change-artist.dto";
 
 @Controller("artist")
@@ -19,81 +15,28 @@ export class ArtistsController {
   };
 
   @Get(":id")
-  getById(@Param("id") id: string, @Res() response: Response) {
-    response.header("Content-Type", "application/json");
-    if (!validate(id)) {
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.statusMessage = ResMessages.BAD_REQUEST;
-      response.send(ResMessages.INVALID_UUID);
-      return;  
-    }
-    const artist = this.artists.getById(id);
-    if (!artist) {
-      response.statusCode = HttpStatus.NOT_FOUND;
-      response.statusMessage = ResMessages.NOT_FOUND
-      response.send(ResMessages.NOT_FOUND);
-      return;  
-    }
-    response.send(artist);
-    return; 
+  getById(@Param("id", ParseUUIDPipe) id: string) {
+    const result = this.artists.getById(id);
+    if (!result) { throw new NotFoundException(`The artist with id=${id} is not exist.`) }
+    return result;    
   };
   
   @Post() 
-  create(@Body() data: CreateArtistDTO, @Res() response: Response) {
-    response.header("Content-Type", "application/json");
-    if (!validateData(data)) {
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.statusMessage = ResMessages.BAD_REQUEST;
-      response.send(ResMessages.INVALID_DATA);
-      return;
-    }
-    response.send(this.artists.create(data));
-    return;  
+  create(@Body() data: CreateArtistDTO) {
+    return this.artists.create(data);  
   };
 
   @Put(":id")
-  change(@Body() data: ChangeArtistDTO, @Param("id") id: string, @Res() response: Response) {
-    response.header("Content-Type", "application/json");
-    if (!validate(id)) {
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.statusMessage = ResMessages.BAD_REQUEST;
-      response.send(ResMessages.INVALID_UUID);
-      return;
-    }
-    if (!validateData(data)) {
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.statusMessage = ResMessages.BAD_REQUEST;
-      response.send(ResMessages.INVALID_DATA);
-      return;
-    }
-    const artist = this.artists.change(data, id);
-    if (!artist) {
-      response.statusCode = HttpStatus.NOT_FOUND;
-      response.statusMessage = ResMessages.NOT_FOUND
-      response.send(ResMessages.NOT_FOUND);
-      return; 
-    }
-    response.send(artist);
-    return;
+  change(@Body() data: ChangeArtistDTO, @Param("id", ParseUUIDPipe) id: string) {
+    const result = this.artists.change(data, id);
+    if (!result) { throw new NotFoundException(`The artist with id={id} is not exist.`) }
+    return result;
   };
 
   @Delete(":id")
-  delete(@Param("id") id: string, @Res() response: Response) {
-    response.header("Content-Type", "application/json");
-    if (!validate(id)) {
-      response.statusCode = HttpStatus.BAD_REQUEST;
-      response.statusMessage = ResMessages.BAD_REQUEST;
-      response.send(ResMessages.INVALID_UUID);
-      return;
-    }
+  @HttpCode(204)
+  delete(@Param("id", ParseUUIDPipe) id: string) {
     const result = this.artists.delete(id);
-    if (!result) {
-      response.statusCode = HttpStatus.NOT_FOUND;
-      response.statusMessage = ResMessages.NOT_FOUND
-      response.send(ResMessages.NOT_FOUND);
-      return;   
-    }
-    response.send(ResMessages.DELETED);
-    return;
-  }
+    if (!result) { throw new NotFoundException(`The artist with id=${id} is not exist.`) }   
+  };
 };

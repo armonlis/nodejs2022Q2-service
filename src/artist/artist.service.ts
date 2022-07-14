@@ -16,9 +16,10 @@ export class ArtistsService {
     return this.artists;
   };
   
-  getById(id: string): IArtist | null {
-    const artist = this.artists.find(artist => artist.id === id) as IArtist | -1;
-    return artist === -1 ? null : artist
+  getById(id: string) {
+    const artist = this.artists.find(artist => artist.id === id);
+    if (!artist) { return; }
+    return artist;
   };
 
   create(data: CreateArtistDTO): IArtist {
@@ -27,17 +28,17 @@ export class ArtistsService {
     return artist;
   };
 
-  change(data: ChangeArtistDTO, id: string): IArtist | null {
-    const artist = this.artists.find(artist => artist.id === id) as IArtist | -1;
-    if (artist === -1) { return null }
-    artist.name = data?.name ?? artist.name;
-    artist.grammy = data?.grammy ?? artist.grammy;
+  change(data: ChangeArtistDTO, id: string) {
+    let artist = this.artists.find(artist => artist.id === id);
+    if (!artist) { return }
+    artist = {...artist, ...data};
+    console.log("ARTIST>>>>", artist)
     return artist;
   };
 
   delete(id: string): boolean {
     const index = this.artists.findIndex(artist => artist.id === id);
-    if (index === -1) { return false }
+    if (index === -1) { return }
     this.artists.splice(index, 1);
     this.favourites.deleteArtist(id);
     return true;
