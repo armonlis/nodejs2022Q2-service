@@ -4,11 +4,13 @@ import { v4 as uuid } from "uuid";
 import { CreateArtistDTO } from "./DTO/create-artist.dto";
 import { ChangeArtistDTO } from "./DTO/change-artist.dto";
 import { FavouritesService } from "src/favourites/favourites.service";
+import { TracksService } from "src/track/tracks.service";
 
 @Injectable()
 export class ArtistsService {
 
-  constructor(@Inject(forwardRef(() => FavouritesService)) private readonly favourites: FavouritesService) {};
+  constructor(@Inject(forwardRef(() => FavouritesService)) private readonly favourites: FavouritesService,
+    @Inject(forwardRef(() => TracksService)) private readonly tracks: TracksService) {};
 
   private readonly artists: IArtist[] = [];
   
@@ -32,7 +34,6 @@ export class ArtistsService {
     let artist = this.artists.find(artist => artist.id === id);
     if (!artist) { return }
     artist = {...artist, ...data};
-    console.log("ARTIST>>>>", artist)
     return artist;
   };
 
@@ -41,6 +42,7 @@ export class ArtistsService {
     if (index === -1) { return }
     this.artists.splice(index, 1);
     this.favourites.deleteArtist(id);
+    this.tracks.setToNull(id);
     return true;
   };
 

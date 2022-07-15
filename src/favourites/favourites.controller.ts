@@ -35,6 +35,21 @@ export class FavouritesController {
     return;
   };
 
+  @Post("track/:id")
+  createFavouritesTrack(@Param("id", ParseUUIDPipe) id: string) {
+    const result = this.favourites.addTrack(id);
+    if (!result) { throw new UnprocessableEntityException("A such track does not exist.") }
+    return `The tack ${result.name} was added to favourites.`
+  };
+
+  @Delete("track/:id")
+  @HttpCode(204)
+  deleteFavouritesTrack(@Param("id", ParseUUIDPipe) id: string) {
+    const result = this.favourites.deleteTrack(id);
+    if (!result) { throw new UnprocessableEntityException("A such track does not exist.") }
+    return;
+  };
+
   @Get()
   getFavourites() {
     return this.favourites.get();

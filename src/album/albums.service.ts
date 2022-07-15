@@ -2,12 +2,14 @@ import { Injectable, Inject, forwardRef } from "@nestjs/common";
 import { v4 as uuid } from "uuid";
 import { IAddedAlbum, IAlbum, IUpdatedAlbum } from "./interfaces";
 import { FavouritesService } from "src/favourites/favourites.service";
+import { TracksService } from "src/track/tracks.service";
 
 
 @Injectable()
 export class AlbumsService {
 
-  constructor(@Inject(forwardRef(() => FavouritesService)) private readonly favourites: FavouritesService) {};
+  constructor(@Inject(forwardRef(() => FavouritesService)) private readonly favourites: FavouritesService,
+    @Inject(forwardRef(() => TracksService)) private readonly tracks: TracksService) {};
 
   private readonly albums: IAlbum[] = [];  
   
@@ -34,6 +36,7 @@ export class AlbumsService {
     const index = this.albums.findIndex(album => album.id === id);
     if (index === -1) { return undefined }
     this.favourites.deleteAlbum(id);
+    this.tracks.setToNull(id, "album");
     this.albums.splice(index, 1);
     return true;
   };
