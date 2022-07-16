@@ -8,8 +8,14 @@ import { AlbumsModule } from './album/albums.module';
 import { TrackModule } from './track/tracks.module';
 
 @Module({
-  imports: [AtristsModule, UserModule, FavouritesModule, AlbumsModule, TrackModule],
+  imports: [
+    AtristsModule,
+    UserModule,
+    FavouritesModule,
+    AlbumsModule,
+    TrackModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {};
+export class AppModule {}

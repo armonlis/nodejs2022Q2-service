@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from "./validation/validation.pipe";
-import("dotenv/config");
+import { ValidationPipe } from './validation/validation.pipe';
+import('dotenv/config');
 
 const PORT = process.env.PORT || 4000;
 

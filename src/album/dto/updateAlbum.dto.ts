@@ -1,7 +1,6 @@
-import { IsString, IsInt, IsOptional } from "class-validator";
+import { IsString, IsInt, IsOptional } from 'class-validator';
 
 export class UpdateAlbumDto {
-
   @IsString()
   @IsOptional()
   name?: string;
@@ -13,5 +12,4 @@ export class UpdateAlbumDto {
   @IsString()
   @IsOptional()
   artistId?: string | null;
-
-};
+}

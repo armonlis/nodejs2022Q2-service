@@ -1,58 +1,78 @@
-import { Controller, Post, Get, Delete, UnprocessableEntityException, Param, ParseUUIDPipe, HttpCode} from "@nestjs/common";
-import { FavouritesService } from "./favourites.service";
+import {
+  Controller,
+  Post,
+  Get,
+  Delete,
+  UnprocessableEntityException,
+  Param,
+  ParseUUIDPipe,
+  HttpCode,
+} from '@nestjs/common';
+import { FavouritesService } from './favourites.service';
 
-@Controller("favs")
+@Controller('favs')
 export class FavouritesController {
-  constructor(private readonly favourites: FavouritesService) {};
+  constructor(private readonly favourites: FavouritesService) {}
 
-  @Post("artist/:id")
-  createFavouritesArtist(@Param("id", ParseUUIDPipe) id: string) {
+  @Post('artist/:id')
+  createFavouritesArtist(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.addArtist(id);
-    if (!result) { throw new UnprocessableEntityException("A such artist does not exist.") }
-    return `The artist ${result.name} was added to favourites.`
-  };
+    if (!result) {
+      throw new UnprocessableEntityException('A such artist does not exist.');
+    }
+    return `The artist ${result.name} was added to favourites.`;
+  }
 
-  @Delete("artist/:id")
+  @Delete('artist/:id')
   @HttpCode(204)
-  deleteFavouritesArtist(@Param("id", ParseUUIDPipe) id: string) {
+  deleteFavouritesArtist(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.deleteArtist(id);
-    if (!result) { throw new UnprocessableEntityException("A such artist does not exist.") }
+    if (!result) {
+      throw new UnprocessableEntityException('A such artist does not exist.');
+    }
     return;
-  };
+  }
 
-  @Post("album/:id")
-  createFavouritesAlbum(@Param("id", ParseUUIDPipe) id: string) {
+  @Post('album/:id')
+  createFavouritesAlbum(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.addAlbum(id);
-    if (!result) { throw new UnprocessableEntityException("A such album does not exist.") }
-    return `The album ${result.name} was added to favourites.`
-  };
+    if (!result) {
+      throw new UnprocessableEntityException('A such album does not exist.');
+    }
+    return `The album ${result.name} was added to favourites.`;
+  }
 
-  @Delete("album/:id")
+  @Delete('album/:id')
   @HttpCode(204)
-  deleteFavouritesAlbum(@Param("id", ParseUUIDPipe) id: string) {
+  deleteFavouritesAlbum(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.deleteAlbum(id);
-    if (!result) { throw new UnprocessableEntityException("A such album does not exist.") }
+    if (!result) {
+      throw new UnprocessableEntityException('A such album does not exist.');
+    }
     return;
-  };
+  }
 
-  @Post("track/:id")
-  createFavouritesTrack(@Param("id", ParseUUIDPipe) id: string) {
+  @Post('track/:id')
+  createFavouritesTrack(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.addTrack(id);
-    if (!result) { throw new UnprocessableEntityException("A such track does not exist.") }
-    return `The tack ${result.name} was added to favourites.`
-  };
+    if (!result) {
+      throw new UnprocessableEntityException('A such track does not exist.');
+    }
+    return `The tack ${result.name} was added to favourites.`;
+  }
 
-  @Delete("track/:id")
+  @Delete('track/:id')
   @HttpCode(204)
-  deleteFavouritesTrack(@Param("id", ParseUUIDPipe) id: string) {
+  deleteFavouritesTrack(@Param('id', ParseUUIDPipe) id: string) {
     const result = this.favourites.deleteTrack(id);
-    if (!result) { throw new UnprocessableEntityException("A such track does not exist.") }
+    if (!result) {
+      throw new UnprocessableEntityException('A such track does not exist.');
+    }
     return;
-  };
+  }
 
   @Get()
   getFavourites() {
     return this.favourites.get();
-  };
-
-};
+  }
+}

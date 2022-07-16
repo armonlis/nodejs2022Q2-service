@@ -1,4 +1,3 @@
 export enum ServiceResponses {
-  WRONG_PASSWORD = "Wrong password.",
-};
-
+  WRONG_PASSWORD = 'Wrong password.',
+}

@@ -1,7 +1,6 @@
-import { IsString, IsBoolean, IsNotEmpty } from "class-validator";
+import { IsString, IsBoolean, IsNotEmpty } from 'class-validator';
 
 export class CreateArtistDTO {
-
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -9,5 +8,4 @@ export class CreateArtistDTO {
   @IsNotEmpty()
   @IsBoolean()
   grammy: boolean;
-  
-};
+}
