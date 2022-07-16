@@ -21,7 +21,7 @@ export class AlbumsService {
   add(body: IAddedAlbum): IAlbum {
     const { name, year, artistId } = body;
     if (artistId) {
-      const artist = this.artists.getById(artistId);
+      const artist = this.artists.get(artistId);
       if (!artist) { return }
     }
     const album = {

@@ -21,11 +21,18 @@ export class TracksService {
   ) {}
 
   add(data: CreateTrackDto) {
+    const { albumId, artistId } = data;
+    if (albumId) {
+      if (!this.checkId(albumId, "album")) { return }
+    }
+    if (artistId) {
+      if (!this.checkId(artistId)) { return }
+    }
     const track = {
       id: uuid(),
       ...data,
-      albumId: data.albumId ?? null,
-      artistId: data.artistId ?? null,
+      albumId: albumId ?? null,
+      artistId: artistId ?? null,
     };
     this.tracks.push(track);
     return track;
@@ -66,5 +73,9 @@ export class TracksService {
         this.tracks[index][`${property}Id`] = null;
       }
     }
+  }
+
+  checkId(id: string, mode: "artist" | "album" = "artist") {
+    return this[`${mode}s`].get(id);
   }
 }

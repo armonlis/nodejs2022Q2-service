@@ -21,7 +21,7 @@ export class ArtistsService {
     return this.artists;
   }
 
-  getById(id: string) {
+  get(id: string) {
     const artist = this.artists.find((artist) => artist.id === id);
     if (!artist) {
       return;

@@ -24,7 +24,7 @@ export class FavouritesService {
   get() {
     const res: IFavouritesResponse = { artists: [], albums: [], tracks: [] };
     this.favourites.artists.forEach((id) =>
-      res.artists.push(this.artists.getById(id)),
+      res.artists.push(this.artists.get(id)),
     );
     this.favourites.albums.forEach((id) =>
       res.albums.push(this.albums.get(id)),
@@ -36,7 +36,7 @@ export class FavouritesService {
   }
 
   addArtist(id: string) {
-    const artist = this.artists.getById(id);
+    const artist = this.artists.get(id);
     if (!artist) {
       return;
     }
