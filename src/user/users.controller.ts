@@ -21,13 +21,14 @@ export class UsersController {
   constructor(private users: UsersService) {}
 
   @Get()
-  getAllUsers() {
-    return this.users.getAll();
+  async getAllUsers() {
+    const result = await this.users.getAll();
+    return result;
   }
 
   @Get(':id')
-  getUserById(@Param('id', ParseUUIDPipe) id: string) {
-    const user = this.users.get(id);
+  async getUserById(@Param('id', ParseUUIDPipe) id: string) {
+    const user = await this.users.get(id);
     if (!user) {
       throw new NotFoundException('User with a such id was not found.');
     }
@@ -35,16 +36,17 @@ export class UsersController {
   }
 
   @Post()
-  addUser(@Body() createUserDto: CreateUserDto) {
-    return this.users.add(createUserDto);
+  async addUser(@Body() createUserDto: CreateUserDto) {
+    const result = await this.users.add(createUserDto);
+    return result;
   }
 
   @Put(':id')
-  changeUserPassword(
+  async changeUserPassword(
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
     @Param('id', ParseUUIDPipe) id: string,
   ) {
-    const result = this.users.updatePassword(updateUserPasswordDto, id);
+    const result = await this.users.updatePassword(updateUserPasswordDto, id);
     if (!result) {
       throw new NotFoundException('User with a such id was not found.');
     }
@@ -56,8 +58,8 @@ export class UsersController {
 
   @Delete(':id')
   @HttpCode(204)
-  deleteUser(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.users.delete(id);
+  async deleteUser(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.users.delete(id);
     if (!result) {
       throw new NotFoundException('User with a such id was not found.');
     }
