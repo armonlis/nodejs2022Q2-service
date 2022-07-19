@@ -1,10 +1,11 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { IArtist } from './interfaces';
-import { v4 as uuid } from 'uuid';
 import { CreateArtistDTO } from './DTO/create-artist.dto';
 import { ChangeArtistDTO } from './DTO/change-artist.dto';
 import { FavouritesService } from 'src/favourites/favourites.service';
 import { TracksService } from 'src/track/tracks.service';
+import { Artist } from 'src/typeorm/entity/artists';
+import { AppDataSource } from 'src/typeorm/data-source';
 
 @Injectable()
 export class ArtistsService {
@@ -15,42 +16,43 @@ export class ArtistsService {
     private readonly tracks: TracksService,
   ) {}
 
-  private readonly artists: IArtist[] = [];
+  private readonly artistsStorage = AppDataSource.getRepository(Artist);
 
-  getAll(): IArtist[] {
-    return this.artists;
+  async getAll() {
+    const result = await this.artistsStorage.find();
+    return result;
   }
 
-  get(id: string) {
-    const artist = this.artists.find((artist) => artist.id === id);
+  async get(id: string) {
+    const artist = await this.artistsStorage.findOneBy({ id });
     if (!artist) {
       return;
     }
     return artist;
   }
 
-  create(data: CreateArtistDTO): IArtist {
-    const artist = { ...data, id: uuid() };
-    this.artists.push(artist);
+  async create(data: CreateArtistDTO) {
+    const artist = { ...new Artist(), ...data };
+    await this.artistsStorage.save(artist);
     return artist;
   }
 
-  change(data: ChangeArtistDTO, id: string) {
-    let artist = this.artists.find((artist) => artist.id === id);
+  async change(data: ChangeArtistDTO, id: string) {
+    let artist = await this.artistsStorage.findOneBy({ id });
     if (!artist) {
       return;
     }
     artist = { ...artist, ...data };
+    await this.artistsStorage.save(artist);
     return artist;
   }
 
-  delete(id: string): boolean {
-    const index = this.artists.findIndex((artist) => artist.id === id);
-    if (index === -1) {
+  async delete(id: string) {
+    const artist = await this.artistsStorage.findOneBy({ id })
+    if (!artist) {
       return;
     }
-    this.artists.splice(index, 1);
-    this.favourites.deleteArtist(id);
+    await this.artistsStorage.remove(artist);
     this.tracks.setToNull(id);
     return true;
   }

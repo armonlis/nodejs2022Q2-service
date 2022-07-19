@@ -21,11 +21,12 @@ export class FavouritesService {
     albums: [],
   };
 
-  get() {
+  async get() {
     const res: IFavouritesResponse = { artists: [], albums: [], tracks: [] };
-    this.favourites.artists.forEach((id) =>
-      res.artists.push(this.artists.get(id)),
-    );
+    this.favourites.artists.forEach(async (id) => {
+      const artist = await this.artists.get(id);
+      res.artists.push(artist);
+    });
     this.favourites.albums.forEach((id) =>
       res.albums.push(this.albums.get(id)),
     );

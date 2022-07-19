@@ -1,6 +1,9 @@
 import "reflect-metadata";
 import { User } from "./entity/users";
+import { Artist } from "./entity/artists";
 import { DataSource } from "typeorm";
+import { AddUserToDB1658254156377 as AddUserToDB } from "./migration/1658254156377-AddUserToDB";
+import { AddArtistToDB1658256191559 as AddArtistToDB } from "./migration/1658256191559-AddArtistToDB";
 import"dotenv/config";
 
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -16,9 +19,10 @@ export const AppDataSource = new DataSource({
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB_NAME,
-  synchronize: true,
+  synchronize: false,
   logging: false,
-  entities: [User],
-  migrations: [],
+  entities: [User, Artist],
+  migrations: [AddUserToDB, AddArtistToDB],
   subscribers: [],
+  migrationsTableName: "migrations"
 });

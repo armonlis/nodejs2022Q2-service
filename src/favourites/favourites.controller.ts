@@ -15,8 +15,8 @@ export class FavouritesController {
   constructor(private readonly favourites: FavouritesService) {}
 
   @Post('artist/:id')
-  createFavouritesArtist(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.favourites.addArtist(id);
+  async createFavouritesArtist(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.favourites.addArtist(id);
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
@@ -72,7 +72,8 @@ export class FavouritesController {
   }
 
   @Get()
-  getFavourites() {
-    return this.favourites.get();
+  async getFavourites() {
+    const result = await this.favourites.get();
+    return result; 
   }
 }

@@ -11,7 +11,6 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { ArtistsService } from './artist.service';
-import { IArtist } from './interfaces';
 import { CreateArtistDTO } from './DTO/create-artist.dto';
 import { ChangeArtistDTO } from './DTO/change-artist.dto';
 
@@ -20,13 +19,14 @@ export class ArtistsController {
   constructor(private artists: ArtistsService) {}
 
   @Get()
-  getAll(): IArtist[] {
-    return this.artists.getAll();
+  async getAll() {
+    const result = await this.artists.getAll();
+    return result;
   }
 
   @Get(':id')
-  getById(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.artists.get(id);
+  async getById(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.artists.get(id);
     if (!result) {
       throw new NotFoundException(`The artist with id=${id} is not exist.`);
     }
@@ -34,16 +34,17 @@ export class ArtistsController {
   }
 
   @Post()
-  create(@Body() data: CreateArtistDTO) {
-    return this.artists.create(data);
+  async create(@Body() data: CreateArtistDTO) {
+    const result = await this.artists.create(data);
+    return result; 
   }
 
   @Put(':id')
-  change(
+  async change(
     @Body() data: ChangeArtistDTO,
     @Param('id', ParseUUIDPipe) id: string,
   ) {
-    const result = this.artists.change(data, id);
+    const result = await this.artists.change(data, id);
     if (!result) {
       throw new NotFoundException(`The artist with id={id} is not exist.`);
     }
@@ -52,8 +53,8 @@ export class ArtistsController {
 
   @Delete(':id')
   @HttpCode(204)
-  delete(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.artists.delete(id);
+  async delete(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.artists.delete(id);
     if (!result) {
       throw new NotFoundException(`The artist with id=${id} is not exist.`);
     }
