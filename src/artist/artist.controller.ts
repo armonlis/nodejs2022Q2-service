@@ -36,7 +36,7 @@ export class ArtistsController {
   @Post()
   async create(@Body() data: CreateArtistDTO) {
     const result = await this.artists.create(data);
-    return result; 
+    return result;
   }
 
   @Put(':id')

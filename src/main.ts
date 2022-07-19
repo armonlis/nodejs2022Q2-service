@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from './validation/validation.pipe';
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 import { AppDataSource } from './typeorm/data-source';
 import { stdout } from 'process';
 
@@ -18,5 +18,4 @@ AppDataSource.initialize()
   .then(async () => {
     bootstrap();
   })
-  .catch(error => stdout.write(`ERROR >>> ${error}.\n`)); 
-
+  .catch((error) => stdout.write(`ERROR >>> ${error}.\n`));

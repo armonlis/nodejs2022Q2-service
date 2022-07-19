@@ -1,5 +1,4 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
-import { IArtist } from './interfaces';
 import { CreateArtistDTO } from './DTO/create-artist.dto';
 import { ChangeArtistDTO } from './DTO/change-artist.dto';
 import { FavouritesService } from 'src/favourites/favourites.service';
@@ -48,7 +47,7 @@ export class ArtistsService {
   }
 
   async delete(id: string) {
-    const artist = await this.artistsStorage.findOneBy({ id })
+    const artist = await this.artistsStorage.findOneBy({ id });
     if (!artist) {
       return;
     }

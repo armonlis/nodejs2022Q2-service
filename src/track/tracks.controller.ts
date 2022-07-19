@@ -9,7 +9,7 @@ import {
   Put,
   Delete,
   HttpCode,
-  UnprocessableEntityException
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { TracksService } from './tracks.service';
@@ -22,7 +22,11 @@ export class TracksController {
   @Post()
   async addTrack(@Body() createTrackDto: CreateTrackDto) {
     const result = await this.tracks.add(createTrackDto);
-    if (!result) { throw new UnprocessableEntityException("A such artist or album does not exist.") }
+    if (!result) {
+      throw new UnprocessableEntityException(
+        'A such artist or album does not exist.',
+      );
+    }
     return result;
   }
 

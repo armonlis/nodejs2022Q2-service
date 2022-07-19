@@ -1,14 +1,10 @@
-import { Injectable, Inject, forwardRef } from '@nestjs/common';
-import { IAddedAlbum, IAlbum, IUpdatedAlbum } from './interfaces';
-import { FavouritesService } from 'src/favourites/favourites.service';
-import { TracksService } from 'src/track/tracks.service';
-import { ArtistsService } from 'src/artist/artist.service';
+import { Injectable } from '@nestjs/common';
+import { IAddedAlbum, IUpdatedAlbum } from './interfaces';
 import { AppDataSource } from 'src/typeorm/data-source';
 import { Album } from 'src/typeorm/entity/albums';
 
 @Injectable()
 export class AlbumsService {
-  
   private readonly albumsStorage = AppDataSource.getRepository(Album);
 
   async add(body: IAddedAlbum) {

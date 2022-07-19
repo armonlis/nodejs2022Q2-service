@@ -9,9 +9,8 @@ import {
   Delete,
   HttpCode,
   Get,
-  UnprocessableEntityException
+  UnprocessableEntityException,
 } from '@nestjs/common';
-import { IAlbum } from './interfaces';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/updateAlbum.dto';
@@ -23,7 +22,9 @@ export class AlbumsController {
   @Post()
   async addAlbum(@Body() createAlbumDto: CreateAlbumDto) {
     const result = await this.albums.add(createAlbumDto);
-    if (!result) { throw new UnprocessableEntityException("A such artist does not exist.") }
+    if (!result) {
+      throw new UnprocessableEntityException('A such artist does not exist.');
+    }
     return result;
   }
 

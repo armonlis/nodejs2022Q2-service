@@ -6,7 +6,6 @@ import { Track } from 'src/typeorm/entity/tracks';
 
 @Injectable()
 export class TracksService {
- 
   private readonly tracksRepository = AppDataSource.getRepository(Track);
 
   async add(data: CreateTrackDto) {
@@ -43,5 +42,4 @@ export class TracksService {
     await this.tracksRepository.remove(track);
     return true;
   }
-
 }

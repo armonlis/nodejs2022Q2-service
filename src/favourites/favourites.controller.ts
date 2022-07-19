@@ -74,6 +74,6 @@ export class FavouritesController {
   @Get()
   async getFavourites() {
     const result = await this.favourites.get();
-    return result; 
+    return result;
   }
 }

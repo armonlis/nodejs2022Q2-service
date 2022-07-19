@@ -11,7 +11,7 @@ export class UsersService {
 
   async getAll() {
     const users = await this.users.find();
-    const returnedUsers = users.map(user => {
+    const returnedUsers = users.map((user) => {
       const { login, id, createdAt, updatedAt, version } = user;
       return { login, id, createdAt, updatedAt, version };
     });
@@ -28,23 +28,34 @@ export class UsersService {
   }
 
   async add(data: CreateUserDto) {
-    const user = { ...new User(), ...data }
+    const user = { ...new User(), ...data };
     await this.users.save(user);
     const { login, id, createdAt, updatedAt, version } = user;
-    return { login, id, createdAt: Date.parse(createdAt), updatedAt: Date.parse(updatedAt), version };
+    return {
+      login,
+      id,
+      createdAt: Date.parse(createdAt),
+      updatedAt: Date.parse(updatedAt),
+      version,
+    };
   }
 
   async updatePassword(data: UpdateUserPasswordDto, indificator: string) {
     const { oldPassword, newPassword } = data;
     const user = await this.users.findOneBy({ id: indificator });
-    if (!user) { return }
+    if (!user) {
+      return;
+    }
     if (user && user.password !== oldPassword) {
       return ServiceResponses.WRONG_PASSWORD;
     }
     user.password = newPassword;
     await this.users.save(user);
     const { login, id, createdAt, version } = user;
-    let updatedAt = Date.parse(createdAt) === Date.parse(user.updatedAt) ? Date.parse(createdAt) + 999 : Date.parse(user.updatedAt); 
+    const updatedAt =
+      Date.parse(createdAt) === Date.parse(user.updatedAt)
+        ? Date.parse(createdAt) + 999
+        : Date.parse(user.updatedAt);
     return { login, id, createdAt: Date.parse(createdAt), updatedAt, version };
   }
 

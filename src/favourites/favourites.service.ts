@@ -27,12 +27,8 @@ export class FavouritesService {
       const artist = await this.artists.get(id);
       res.artists.push(artist);
     });
-    this.favourites.albums.forEach((id) =>
-      res.albums.push()
-    );
-    this.favourites.tracks.forEach((id) =>
-      res.tracks.push()
-    );
+    this.favourites.albums.forEach((id) => res.albums.push());
+    this.favourites.tracks.forEach((id) => res.tracks.push());
     return res;
   }
 
