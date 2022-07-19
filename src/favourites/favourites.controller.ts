@@ -34,8 +34,8 @@ export class FavouritesController {
   }
 
   @Post('album/:id')
-  createFavouritesAlbum(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.favourites.addAlbum(id);
+  async createFavouritesAlbum(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.favourites.addAlbum(id);
     if (!result) {
       throw new UnprocessableEntityException('A such album does not exist.');
     }

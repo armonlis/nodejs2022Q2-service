@@ -1,41 +1,24 @@
 import { Injectable, Inject, forwardRef } from '@nestjs/common';
-import { v4 as uuid } from 'uuid';
 import { IAddedAlbum, IAlbum, IUpdatedAlbum } from './interfaces';
 import { FavouritesService } from 'src/favourites/favourites.service';
 import { TracksService } from 'src/track/tracks.service';
 import { ArtistsService } from 'src/artist/artist.service';
+import { AppDataSource } from 'src/typeorm/data-source';
+import { Album } from 'src/typeorm/entity/albums';
 
 @Injectable()
 export class AlbumsService {
-  constructor(
-    @Inject(forwardRef(() => FavouritesService))
-    private readonly favourites: FavouritesService,
-    @Inject(forwardRef(() => TracksService))
-    private readonly tracks: TracksService,
-    @Inject(forwardRef(() => ArtistsService))
-    private readonly artists: ArtistsService,
-  ) {}
+  
+  private readonly albumsStorage = AppDataSource.getRepository(Album);
 
-  private readonly albums: IAlbum[] = [];
-
-  add(body: IAddedAlbum): IAlbum {
-    const { name, year, artistId } = body;
-    if (artistId) {
-      const artist = this.artists.get(artistId);
-      if (!artist) { return }
-    }
-    const album = {
-      id: uuid(),
-      name,
-      year,
-      artistId: artistId ?? null,
-    };
-    this.albums.push(album);
+  async add(body: IAddedAlbum) {
+    const album = { ...new Album(), ...body };
+    await this.albumsStorage.save(album);
     return album;
   }
 
-  update(body: IUpdatedAlbum, id: string): IAlbum {
-    let album = this.albums.find((album) => album.id === id);
+  async update(body: IUpdatedAlbum, id: string) {
+    let album = await this.albumsStorage.findOneBy({ id });
     if (!album) {
       return;
     }
@@ -43,22 +26,22 @@ export class AlbumsService {
     return album;
   }
 
-  delete(id: string) {
-    const index = this.albums.findIndex((album) => album.id === id);
-    if (index === -1) {
-      return undefined;
+  async delete(id: string) {
+    const album = await this.albumsStorage.findOneBy({ id });
+    if (!album) {
+      return;
     }
-    this.favourites.deleteAlbum(id);
-    this.tracks.setToNull(id, 'album');
-    this.albums.splice(index, 1);
+    await this.albumsStorage.remove(album);
     return true;
   }
 
-  getAll() {
-    return this.albums;
+  async getAll() {
+    const result = await this.albumsStorage.find();
+    return result;
   }
 
-  get(id: string) {
-    return this.albums.find((album) => album.id === id);
+  async get(id: string) {
+    const result = await this.albumsStorage.findOneBy({ id });
+    return result;
   }
 }

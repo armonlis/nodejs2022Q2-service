@@ -28,10 +28,10 @@ export class FavouritesService {
       res.artists.push(artist);
     });
     this.favourites.albums.forEach((id) =>
-      res.albums.push(this.albums.get(id)),
+      res.albums.push()
     );
     this.favourites.tracks.forEach((id) =>
-      res.tracks.push(this.tracks.get(id)),
+      res.tracks.push(this.tracks.get(id))
     );
     return res;
   }

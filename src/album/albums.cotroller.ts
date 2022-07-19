@@ -21,18 +21,18 @@ export class AlbumsController {
   constructor(private readonly albums: AlbumsService) {}
 
   @Post()
-  addAlbum(@Body() createAlbumDto: CreateAlbumDto): IAlbum {
-    const result = this.albums.add(createAlbumDto);
+  async addAlbum(@Body() createAlbumDto: CreateAlbumDto) {
+    const result = await this.albums.add(createAlbumDto);
     if (!result) { throw new UnprocessableEntityException("A such artist does not exist.") }
     return result;
   }
 
   @Put(':id')
-  updateAlbum(
+  async updateAlbum(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateAlbumDto: UpdateAlbumDto,
-  ): IAlbum {
-    const result = this.albums.update(updateAlbumDto, id);
+  ) {
+    const result = await this.albums.update(updateAlbumDto, id);
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
@@ -41,8 +41,8 @@ export class AlbumsController {
 
   @Delete(':id')
   @HttpCode(204)
-  deleteAlbum(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.albums.delete(id);
+  async deleteAlbum(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.albums.delete(id);
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
@@ -55,8 +55,8 @@ export class AlbumsController {
   }
 
   @Get(':id')
-  getAlbumById(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.albums.get(id);
+  async getAlbumById(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.albums.get(id);
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
