@@ -53,7 +53,6 @@ export class ArtistsService {
       return;
     }
     await this.artistsStorage.remove(artist);
-    this.tracks.setToNull(id);
     return true;
   }
 }

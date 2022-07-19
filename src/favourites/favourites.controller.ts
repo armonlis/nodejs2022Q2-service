@@ -53,8 +53,8 @@ export class FavouritesController {
   }
 
   @Post('track/:id')
-  createFavouritesTrack(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.favourites.addTrack(id);
+  async createFavouritesTrack(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.favourites.addTrack(id);
     if (!result) {
       throw new UnprocessableEntityException('A such track does not exist.');
     }

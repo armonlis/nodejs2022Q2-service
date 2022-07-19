@@ -20,20 +20,21 @@ export class TracksController {
   constructor(private readonly tracks: TracksService) {}
 
   @Post()
-  addTrack(@Body() createTrackDto: CreateTrackDto) {
-    const result = this.tracks.add(createTrackDto);
+  async addTrack(@Body() createTrackDto: CreateTrackDto) {
+    const result = await this.tracks.add(createTrackDto);
     if (!result) { throw new UnprocessableEntityException("A such artist or album does not exist.") }
     return result;
   }
 
   @Get()
-  getAllTracks() {
-    return this.tracks.getAll();
+  async getAllTracks() {
+    const result = this.tracks.getAll();
+    return result;
   }
 
   @Get(':id')
-  getTrackById(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.tracks.get(id);
+  async getTrackById(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.tracks.get(id);
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }
@@ -41,11 +42,11 @@ export class TracksController {
   }
 
   @Put(':id')
-  updateTrack(
+  async updateTrack(
     @Body() updateTrackDto: UpdateTrackDto,
     @Param('id', ParseUUIDPipe) id: string,
   ) {
-    const result = this.tracks.update(updateTrackDto, id);
+    const result = await this.tracks.update(updateTrackDto, id);
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }
@@ -54,8 +55,8 @@ export class TracksController {
 
   @Delete(':id')
   @HttpCode(204)
-  deleteTrack(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.tracks.delete(id);
+  async deleteTrack(@Param('id', ParseUUIDPipe) id: string) {
+    const result = await this.tracks.delete(id);
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }

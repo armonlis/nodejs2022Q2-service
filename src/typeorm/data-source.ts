@@ -3,6 +3,7 @@ import { User } from "./entity/users";
 import { Artist } from "./entity/artists";
 import { Album } from "./entity/albums";
 import { DataSource } from "typeorm";
+import { Track } from "./entity/tracks";
 import"dotenv/config";
 
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -20,7 +21,7 @@ export const AppDataSource = new DataSource({
   database: POSTGRES_DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Artist, Album],
+  entities: [User, Artist, Album, Track],
   migrations: [],
   subscribers: [],
   migrationsTableName: "migrations"

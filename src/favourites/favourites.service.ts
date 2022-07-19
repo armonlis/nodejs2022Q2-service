@@ -31,7 +31,7 @@ export class FavouritesService {
       res.albums.push()
     );
     this.favourites.tracks.forEach((id) =>
-      res.tracks.push(this.tracks.get(id))
+      res.tracks.push()
     );
     return res;
   }
