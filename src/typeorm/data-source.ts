@@ -5,6 +5,7 @@ import { Album } from './entity/albums';
 import { DataSource } from 'typeorm';
 import { Track } from './entity/tracks';
 import { Favorites } from './entity/favourites';
+import { AddFavorites1658313886799 as initialMigration } from './migration/1658313886799-AddFavorites';
 import 'dotenv/config';
 
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -20,10 +21,10 @@ export const AppDataSource = new DataSource({
   username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB_NAME,
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: [User, Artist, Album, Track, Favorites],
-  migrations: [],
+  migrations: [initialMigration],
   subscribers: [],
   migrationsTableName: 'migrations',
 });
