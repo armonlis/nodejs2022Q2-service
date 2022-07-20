@@ -1,19 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { IAddedAlbum, IUpdatedAlbum } from './interfaces';
 import { AppDataSource } from 'src/typeorm/data-source';
 import { Album } from 'src/typeorm/entity/albums';
+import { CreateAlbumDto } from './dto/create-album.dto';
+import { UpdateAlbumDto } from './dto/updateAlbum.dto';
 
 @Injectable()
 export class AlbumsService {
   private readonly albumsStorage = AppDataSource.getRepository(Album);
 
-  async add(body: IAddedAlbum) {
+  async add(body: CreateAlbumDto) {
     const album = { ...new Album(), ...body };
     await this.albumsStorage.save(album);
     return album;
   }
 
-  async update(body: IUpdatedAlbum, id: string) {
+  async update(body: UpdateAlbumDto, id: string) {
     let album = await this.albumsStorage.findOneBy({ id });
     if (!album) {
       return;
