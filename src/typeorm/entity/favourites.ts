@@ -1,11 +1,10 @@
-import { Entity, PrimaryColumn, JoinTable, ManyToMany, ManyToOne, JoinColumn, Column } from "typeorm";
-import { Artist } from "./artists";
-import { Track } from "./tracks";
-import { Album } from "./albums";
+import { Entity, PrimaryColumn, JoinTable, ManyToMany } from 'typeorm';
+import { Artist } from './artists';
+import { Track } from './tracks';
+import { Album } from './albums';
 
 @Entity()
 export class Favorites {
-
   @PrimaryColumn()
   userId: number;
 
@@ -20,5 +19,4 @@ export class Favorites {
   @ManyToMany(() => Track, { eager: true })
   @JoinTable()
   tracks: Track[];
-
 }

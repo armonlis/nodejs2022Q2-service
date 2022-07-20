@@ -7,7 +7,7 @@ export interface IFavourites {
 interface IArtist {
   id: string;
   name: string;
-  grammy: boolean
+  grammy: boolean;
 }
 
 interface IAlbum {

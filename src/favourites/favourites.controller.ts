@@ -76,5 +76,4 @@ export class FavouritesController {
     const result = await this.favourites.get();
     return result;
   }
-
 }
