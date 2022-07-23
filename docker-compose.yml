@@ -1,11 +1,17 @@
 version: '3'
-services:
 
+services:
+  
   postgres:
-    image: "postgres:14.4-alpine"
+    build: "./db/Dockerfile"
     ports:
       - "5000:5432"
-    environment:
-      POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "myDB"
+    
+  server:
+    build: .
+    ports: 
+      - "4000:4000"
+    depends_on:
+      - "postgres"
+    restart: "on-failure"
+    
