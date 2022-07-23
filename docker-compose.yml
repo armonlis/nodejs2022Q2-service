@@ -2,16 +2,35 @@ version: '3'
 
 services:
   
-  postgres:
-    build: "./db/Dockerfile"
+  db:
+    image: db
+    networks:
+      sky_net:
+        ipv4_address: 100.100.100.4
+
+  preload:
+    image: server
+    command: npm run typeorm migration:run
+    links:
+      - db
+    networks:
+      - sky_net
+
+  server: 
+    image: server
+    command: npm run start:prod
+    restart: always
+    links:
+      - preload
     ports:
-      - "5000:5432"
-    
-  server:
-    build: .
-    ports: 
       - "4000:4000"
-    depends_on:
-      - "postgres"
-    restart: "on-failure"
-    
+    volumes:
+      - /app/src:/src
+    networks:
+      - sky_net
+        
+networks:
+  sky_net:
+    ipam:
+      config:
+        - subnet: "100.100.100.0/24"
