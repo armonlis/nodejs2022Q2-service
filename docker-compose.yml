@@ -23,7 +23,7 @@ services:
 
   server: 
     image: server
-    command: npm run start:prod
+    command: npm run start:dev
     depends_on:
       - "data_base"
       - "preload"
