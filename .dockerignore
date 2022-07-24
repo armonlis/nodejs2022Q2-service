@@ -1,0 +1,9 @@
+dist
+doc
+test
+.env.example
+.eslintrc.js
+.gitignore
+.prettierrc
+README.MD
+node_modules

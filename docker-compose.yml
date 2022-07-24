@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  
+  data_base:
+    #image: db
+    build:
+      context: .
+      dockerfile: db.Dockerfile
+    volumes:
+      - /postgres/data_base/:/var/lib/postgresql/data
+      - /postgres/logs/:/PGDATA/pg_log
+    networks:
+      sky_net:
+        ipv4_address: 100.100.100.4
+
+  preload:
+    #image: server
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    command: npm run typeorm migration:run
+    depends_on:
+      - "data_base"
+    links:
+      - "data_base"
+    restart: on-failure
+    networks:
+      - sky_net
+
+  server: 
+    #image: server
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    command: npm run start:dev
+    depends_on:
+      - "data_base"
+      - "preload"
+    links:
+      - "preload"
+    ports:
+      - "4000:4000"
+    restart: always
+    volumes:
+      - ./src/:/app/src/
+    networks:
+      - sky_net
+        
+networks:
+  sky_net:
+    ipam:
+      config:
+        - subnet: "100.100.100.0/24"
