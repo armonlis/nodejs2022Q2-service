@@ -2,8 +2,10 @@ version: '3'
 
 services:
   
-  db:
+  data_base:
     image: db
+    volumes:
+      - ./db/:/var/lib/postgresql/data
     networks:
       sky_net:
         ipv4_address: 100.100.100.4
@@ -11,21 +13,27 @@ services:
   preload:
     image: server
     command: npm run typeorm migration:run
+    depends_on:
+      - "data_base"
     links:
-      - db
+      - "data_base"
+    restart: on-failure
     networks:
       - sky_net
 
   server: 
     image: server
     command: npm run start:prod
-    restart: always
+    depends_on:
+      - "data_base"
+      - "preload"
     links:
-      - preload
+      - "preload"
     ports:
       - "4000:4000"
+    restart: always
     volumes:
-      - /app/src:/src
+      - ./src/:/app/src/
     networks:
       - sky_net
         
