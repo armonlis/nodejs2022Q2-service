@@ -3,15 +3,21 @@ version: '3'
 services:
   
   data_base:
-    image: db
+    build:
+      context: .
+      dockerfile: db.Dockerfile
     volumes:
-      - ./db/:/var/lib/postgresql/data
+      - /postgres/data_base/:/var/lib/postgresql/data
+      - /postgres/logs/:/PGDATA/pg_log
     networks:
       sky_net:
         ipv4_address: 100.100.100.4
 
   preload:
-    image: server
+    #image: server
+    build:
+      context: .
+      dockerfile: server.Dockerfile
     command: npm run typeorm migration:run
     depends_on:
       - "data_base"
@@ -22,7 +28,10 @@ services:
       - sky_net
 
   server: 
-    image: server
+    #image: server
+    build:
+      context: .
+      dockerfile: server.Dockerfile
     command: npm run start:dev
     depends_on:
       - "data_base"
