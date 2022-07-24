@@ -19,7 +19,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "typeorm": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm -d ./src/typeorm/data-source.ts"
+    "typeorm": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm -d ./src/typeorm/data-source.ts",
+    "scan": "docker scan server && docker scan db",
+    "scan:server": "docker scan server",
+    "scan:db": "docker scan db"
   },
   "dependencies": {
     "reflect-metadata": "^0.1.13",
