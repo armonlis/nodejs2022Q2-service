@@ -1,72 +1,43 @@
-# Home Library Service
+# **REST SERVICE.**
+This part contains two parts in one:
+- Containerization. Docker.
+- PostgresSQL & ORM.
+___
+## **Contanerization. Docker.**
+Clone or download this repository and open the console in its destination.  
+All you need enter in console:  
+`docker-compose up`  
+You can see logs and data base files of Postgres in the folder `postres/data_base` and `postgres/logs` accordingly in the root of your OS. (C:\postgres\... for Win).
+___
+### Creating Docker's images.
+To create postgres image enter in console:  
+`docker build -t db -f db.Dockerfile .`  
+To create the server image enter in console:  
+`docker build -t db -f server.Dockerfile .`  
+Now you can check out the size of the server (application) image (less than 350Mb).  
+Also you can start this app using images. For this: comment all the build part in the docker compose file and uncomment image one.
+___ 
+### Running application with slow internet connection.
+I can offer you doing following:
+- comment `RUN npm i` in the `server.Dockerfile` file
+- comment `node_module` in the `.dockerignore` file  
 
-## Prerequisites
+After this run:  
+`docker-compose up`  
+Or you can create images and run the application with them (watch the `Creating Docker's images.` part).
+___
+### Vulnerabilities scanning.
+Before scanning you should create images (watch the `Creating Docker's images.` part).  
+Enter in the console:  
+`npm run scan` for scanning your images.  
+`npm run scan:server` for scanning the server image.  
+`npm run scan:db` for scanning the data base image.  
+___
+## **PostgresSQL & ORM.**
+There was used TypeORM.  
+You can see `entities` in the `src\typeorm\entity` folder.  
+You can see `migrations` in the `src\typeorm\migration` folder.  
+To sure migrations are used see `data-source.ts` in the `src\typeorm` folder (synchronize: false and migrations). Also you can see applying migrations in console when you run the application with docker-compose.  
+To run tests enter:  
+`npm run test`
 
-- Git - [Download & Install Git](https://git-scm.com/downloads).
-- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
-
-## Downloading
-
-```
-git clone {repository URL}
-```
-
-## Installing NPM modules
-
-```
-npm install
-```
-
-## Running application
-
-```
-npm start
-```
-
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
-
-## Testing
-
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
-```
-npm run test
-```
-
-To run only one of all test suites
-
-```
-npm run test -- <path to suite>
-```
-
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization
-
-```
-npm run test:auth -- <path to suite>
-```
-
-### Auto-fix and format
-
-```
-npm run lint
-```
-
-```
-npm run format
-```
-
-### Debugging in VSCode
-
-Press <kbd>F5</kbd> to debug.
-
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
