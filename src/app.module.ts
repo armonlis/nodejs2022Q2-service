@@ -7,9 +7,11 @@ import { FavouritesModule } from './favourites/favourites.module';
 import { AlbumsModule } from './album/albums.module';
 import { TrackModule } from './track/tracks.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     AtristsModule,
     UserModule,
     FavouritesModule,

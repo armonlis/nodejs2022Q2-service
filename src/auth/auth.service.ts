@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 import { AppDataSource } from "src/typeorm/data-source";
 import { User } from "src/typeorm/entity/users";
 
-const saltRound = 10;
+const saltRound = +process.env.SALTROUND;
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
   async signup(data: SignupDTO) {
     const { login, password } = data;
     const hash = await bcrypt.hash(password, saltRound)
-    await this.usersStorage.save({ login, password: hash })
+    await this.usersStorage.save({ login, password: hash });
     return;
   };   
 
