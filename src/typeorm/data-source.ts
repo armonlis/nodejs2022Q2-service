@@ -6,6 +6,7 @@ import { DataSource } from 'typeorm';
 import { Track } from './entity/tracks';
 import { Favorites } from './entity/favourites';
 import { AddFavorites1658313886799 as initialMigration } from './migration/1658313886799-AddFavorites';
+import { AddRefreshTokenFieldToUser1658992994554 as AddRefreshTokenFieldToUser } from './migration/1658992994554-AddRefreshTokenFieldToUser';
 import 'dotenv/config';
 
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
@@ -24,7 +25,7 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   logging: false,
   entities: [User, Artist, Album, Track, Favorites],
-  migrations: [initialMigration],
+  migrations: [initialMigration, AddRefreshTokenFieldToUser],
   subscribers: [],
   migrationsTableName: 'migrations',
 });

@@ -12,8 +12,8 @@ export class UsersService {
   async getAll() {
     const users = await this.users.find();
     const returnedUsers = users.map((user) => {
-      const { login, id, createdAt, updatedAt, version } = user;
-      return { login, id, createdAt, updatedAt, version };
+      const { login, id, createdAt, updatedAt, version, refresh_token } = user;
+      return { login, id, createdAt, updatedAt, version, refresh_token };
     });
     return returnedUsers;
   }
@@ -23,8 +23,8 @@ export class UsersService {
     if (!user) {
       return;
     }
-    const { login, id, createdAt, updatedAt, version } = user;
-    return { login, id, createdAt, updatedAt, version };
+    const { login, id, createdAt, updatedAt, version, refresh_token } = user;
+    return { login, id, createdAt, updatedAt, version, refresh_token };
   }
 
   async add(data: CreateUserDto) {
@@ -37,7 +37,7 @@ export class UsersService {
       createdAt: Date.parse(createdAt),
       updatedAt: Date.parse(updatedAt),
       version,
-      jwt: null
+      refresh_token: null
     };
   }
 
