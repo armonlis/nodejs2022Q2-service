@@ -26,4 +26,5 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: string;
+  
 }

@@ -37,6 +37,7 @@ export class UsersService {
       createdAt: Date.parse(createdAt),
       updatedAt: Date.parse(updatedAt),
       version,
+      jwt: null
     };
   }
 

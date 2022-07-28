@@ -5,4 +5,5 @@ export interface IUser {
   version: number;
   createdAt: number;
   updatedAt: number;
+  jwt: string | null;
 }
