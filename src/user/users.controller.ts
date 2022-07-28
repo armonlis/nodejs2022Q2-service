@@ -10,22 +10,26 @@ import {
   ForbiddenException,
   Delete,
   HttpCode,
+  UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserPasswordDto } from './dto/update-user.dto';
 import { ServiceResponses } from 'src/constants/constants';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('user')
 export class UsersController {
   constructor(private users: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAllUsers() {
     const result = await this.users.getAll();
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async getUserById(@Param('id', ParseUUIDPipe) id: string) {
     const user = await this.users.get(id);
@@ -35,12 +39,14 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async addUser(@Body() createUserDto: CreateUserDto) {
     const result = await this.users.add(createUserDto);
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async changeUserPassword(
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
@@ -56,6 +62,7 @@ export class UsersController {
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(204)
   async deleteUser(@Param('id', ParseUUIDPipe) id: string) {

@@ -42,7 +42,7 @@ export class AuthService {
     const payload = { username: login, sub: id };
     const jwt = this.jwtService.sign(payload);
     await this.usersStorage.save(user);
-    return { token: jwt };
+    return { accessToken: jwt };
   };
  
 };
