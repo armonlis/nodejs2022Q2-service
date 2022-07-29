@@ -17,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
     FavouritesModule,
     AlbumsModule,
     TrackModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
