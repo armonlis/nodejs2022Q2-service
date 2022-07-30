@@ -75,4 +75,44 @@ export class LogService implements LoggerService {
         return;
     }
   }
+
+  debug(message: string) {
+    if (this.level.length < 3) {
+      return;
+    }
+    switch (this.mode) {
+      case 'console':
+        {
+          stdout.write(` [WARN] ${new Date().toLocaleString()} - ${message}\n`);
+        }
+        break;
+      case 'file':
+        {
+        }
+        break;
+      default:
+        return;
+    }
+  }
+
+  verbose(message: string) {
+    if (this.level.length < 3) {
+      return;
+    }
+    switch (this.mode) {
+      case 'console':
+        {
+          stdout.write(` [WARN] ${new Date().toLocaleString()} - ${message}\n`);
+        }
+        break;
+      case 'file':
+        {
+        }
+        break;
+      default:
+        return;
+    }
+  }
+
+
 }

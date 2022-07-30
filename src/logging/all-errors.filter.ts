@@ -63,14 +63,14 @@ export class AllErrorsExceptionFilter implements ExceptionFilter {
       this.logService.error(
         `[REQUEST] ${req.method} ${req.url} ${JSON.stringify(
           req.body,
-        )} ---> [ERROR] ${resBody.message} ${resBody.error}`,
+        )} ---> [ERROR] ${resBody.error} ${resBody.message}`,
       );
       httpAdapter.reply(
         ctx.getResponse(),
         resBody,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
-      return;
+      throw exception;
     }
   }
 }

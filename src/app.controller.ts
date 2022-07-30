@@ -1,4 +1,5 @@
 import { Controller, Get, InternalServerErrorException } from '@nestjs/common';
+import { stdout } from 'process';
 import { AppService } from './app.service';
 
 @Controller()
@@ -18,5 +19,13 @@ export class AppController {
   @Get('do_me_an_error')
   doError() {
     throw new Error('An error accured!');
+  }
+
+  @Get('do_me_an_error_again')
+  doErrorAgain() {
+    let a: any;
+    if (a.b) {
+      stdout.write("IT IS A WONDER!!!");
+    }
   }
 }
