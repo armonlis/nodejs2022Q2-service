@@ -4,8 +4,6 @@ import { ValidationPipe } from './validation/validation.pipe';
 import * as dotenv from 'dotenv';
 import { AppDataSource } from './typeorm/data-source';
 import { LogService } from './logging/log.service';
-import { HttpExceptionFilter } from './logging/http-exeption.filter';
-import { InternallErrorExceptionFilter } from './logging/internal-error.filter';
 import { AllErrorsExceptionFilter } from './logging/all-errors.filter';
 
 export const logger = new LogService();
