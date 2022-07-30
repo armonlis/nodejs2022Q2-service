@@ -1,43 +1,44 @@
 # **REST SERVICE.**
 This part contains two parts in one:
-- Authenfication.
-- Logging.
+- Authentication and Authorization.
+- Logging & Error Handling.
 ___
-## **Contanerization. Docker.**
+## **Authentication and Authorization**
 Clone or download this repository and open the console in its destination.  
-All you need enter in console:  
-`docker-compose up`  
-You can see logs and data base files of Postgres in the folder `postres/data_base` and `postgres/logs` accordingly in the root of your OS. (C:\postgres\... for Win).
-___
-### Creating Docker's images.
-To create postgres image enter in console:  
-`docker build -t db -f db.Dockerfile .`  
-To create the server image enter in console:  
-`docker build -t db -f server.Dockerfile .`  
-Now you can check out the size of the server (application) image (less than 350Mb).  
-Also you can start this app using images. For this: comment all the build part in the docker compose file and uncomment image one.
-___ 
-### Running application with slow internet connection.
-I can offer you doing following:
-- comment `RUN npm i` in the `server.Dockerfile` file
-- comment `node_module` in the `.dockerignore` file  
-
-After this run:  
-`docker-compose up`  
-Or you can create images and run the application with them (watch the `Creating Docker's images.` part).
-___
-### Vulnerabilities scanning.
-Before scanning you should create images (watch the `Creating Docker's images.` part).  
 Enter in the console:  
-`npm run scan` for scanning your images.  
-`npm run scan:server` for scanning the server image.  
-`npm run scan:db` for scanning the data base image.  
+`npm i` or `npm install`  
+To build image with Postgres enter in the console or skip this part if you have your own one:  
+`docker build -t db -f db.Dockerfile .`  
+To run the Postgres DB enter in the console or run your DB on the port 5000:  
+`docker run --rm -p 5000:5432 db`  
+Then enter in the console:  
+`npm run typeorm migration:run`  
+Then enter in the console:  
+`npm run start:dev` or `npm run build` and `npm run start:prod`  
+Now you can test this application with authorization and authenfication:  
+`npm run test:auth`  
 ___
-## **PostgresSQL & ORM.**
-There was used TypeORM.  
-You can see `entities` in the `src\typeorm\entity` folder.  
-You can see `migrations` in the `src\typeorm\migration` folder.  
-To sure migrations are used see `data-source.ts` in the `src\typeorm` folder (synchronize: false and migrations). Also you can see applying migrations in console when you run the application with docker-compose.  
-To run tests enter:  
-`npm run test`
-
+## **Logging & Error Handling**
+You can use the following options just change the .env file:  
+### LOG_MODE
+- `console` to dispatch logs in the console  
+- `file` to write logs in the files (errors will be written in the others files)  
+### LOG_LEVEL
+- from `0` to `4` in the following sequence "log", "error", "warn", "debug", "verbose"
+### PATH_TO_LOGS
+- the path to your logs folder. Please ended it with /.
+### LOG_FILE_NAME
+- name for your logs files
+### LOGS_MAX_SIZE
+- max size of the files with the logs kB
+### ERROR_FILE_NAME
+- name for your errors files
+### ERRORS_MAX_SIZE
+- max size of the files with the errors kB  
+If you will not change the .env file you will be able to find your logs and errors in the repository_folder/logs/ folder.
+___
+## **Running the application into Docker's container.**
+To run this app with Docker please do following:  
+- change POSTGRES_PORT in the .env file to 5432  
+- change POSTGRES_HOST in the .env file to 100.100.100.4
+- enter in the console `docker-compose up`. Also you can read the README.MD in the develop2 branch for details.
