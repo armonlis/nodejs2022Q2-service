@@ -27,7 +27,7 @@ export class AuthController {
     @Request() { url, method, body },
     @Response() res: any,
   ) {
-    this.authService.signup(signupDto);
+    await this.authService.signup(signupDto);
     await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode

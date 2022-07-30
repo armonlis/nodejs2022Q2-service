@@ -1,7 +1,7 @@
 # **REST SERVICE.**
 This part contains two parts in one:
-- Containerization. Docker.
-- PostgresSQL & ORM.
+- Authenfication.
+- Logging.
 ___
 ## **Contanerization. Docker.**
 Clone or download this repository and open the console in its destination.  
