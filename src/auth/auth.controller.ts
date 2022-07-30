@@ -28,7 +28,7 @@ export class AuthController {
     @Response() res: any,
   ) {
     this.authService.signup(signupDto);
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -46,7 +46,7 @@ export class AuthController {
     if (!result) {
       throw new ForbiddenException();
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -67,7 +67,7 @@ export class AuthController {
     if (!result) {
       throw new ForbiddenException('Refresh token is invalid or expired.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,

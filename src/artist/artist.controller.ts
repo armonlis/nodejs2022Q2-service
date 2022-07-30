@@ -32,7 +32,7 @@ export class ArtistsController {
   @Get()
   async getAll(@Request() { url, method, body }, @Response() res: any) {
     const result = await this.artists.getAll();
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -51,7 +51,7 @@ export class ArtistsController {
     if (!result) {
       throw new NotFoundException(`The artist with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -67,7 +67,7 @@ export class ArtistsController {
     @Response() res: any,
   ) {
     const result = await this.artists.create(data);
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -87,7 +87,7 @@ export class ArtistsController {
     if (!result) {
       throw new NotFoundException(`The artist with id={id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -107,7 +107,7 @@ export class ArtistsController {
     if (!result) {
       throw new NotFoundException(`The artist with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,

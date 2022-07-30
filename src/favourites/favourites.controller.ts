@@ -34,7 +34,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -54,7 +54,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -73,7 +73,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -93,7 +93,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -112,7 +112,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -132,7 +132,7 @@ export class FavouritesController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -144,7 +144,7 @@ export class FavouritesController {
   @Get()
   async getFavourites(@Request() { url, method, body }, @Response() res: any) {
     const result = await this.favourites.get();
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,

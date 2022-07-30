@@ -44,6 +44,7 @@ services:
     restart: always
     volumes:
       - ./src/:/app/src/
+      - /server/logs/:/app/logs/
     networks:
       - sky_net
         

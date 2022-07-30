@@ -41,7 +41,7 @@ export class TracksController {
         'A such artist or album does not exist.',
       );
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -53,7 +53,7 @@ export class TracksController {
   @Get()
   async getAllTracks(@Request() { url, method, body }, @Response() res: any) {
     const result = await this.tracks.getAll();
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -72,7 +72,7 @@ export class TracksController {
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -92,7 +92,7 @@ export class TracksController {
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -112,7 +112,7 @@ export class TracksController {
     if (!result) {
       throw new NotFoundException(`The track with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,

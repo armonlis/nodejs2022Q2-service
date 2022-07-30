@@ -25,7 +25,7 @@ export class AppController {
   doErrorAgain() {
     let a: any;
     if (a.b) {
-      stdout.write("IT IS A WONDER!!!");
+      stdout.write('IT IS A WONDER!!!');
     }
   }
 }

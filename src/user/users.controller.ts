@@ -33,7 +33,7 @@ export class UsersController {
   @Get()
   async getAllUsers(@Request() { url, method, body }, @Response() res: any) {
     const result = await this.users.getAll();
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -52,7 +52,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User with a such id was not found.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -68,7 +68,7 @@ export class UsersController {
     @Response() res: any,
   ) {
     const result = await this.users.add(createUserDto);
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -91,7 +91,7 @@ export class UsersController {
     if (result === ServiceResponses.WRONG_PASSWORD) {
       throw new ForbiddenException('Wrong password. Access denied.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -111,7 +111,7 @@ export class UsersController {
     if (!result) {
       throw new NotFoundException('User with a such id was not found.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,

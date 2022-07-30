@@ -25,13 +25,13 @@ export class LogService implements LoggerService {
   constructor() {
     this.level = LOG_LEVEL;
     this.mode = LOG_MODE;
-    if (this.mode === "file") {
+    if (this.mode === 'file') {
       this.writer = writer;
     }
   }
 
-  log(message: string) {
-    const data = ` [LOG]  ${new Date().toLocaleString()} - ${message}\n`
+  async log(message: string) {
+    const data = ` [LOG]  ${new Date().toLocaleString()} - ${message}\n`;
     switch (this.mode) {
       case 'console':
         {
@@ -40,7 +40,7 @@ export class LogService implements LoggerService {
         break;
       case 'file':
         {
-          this.writer.write(data);
+          await this.writer.write(data);
         }
         break;
       default:
@@ -48,11 +48,11 @@ export class LogService implements LoggerService {
     }
   }
 
-  error(message: string) {
+  async error(message: string) {
     if (this.level.length < 2) {
       return;
     }
-    const data = `[ERROR] ${new Date().toLocaleString()} - ${message}\n`
+    const data = `[ERROR] ${new Date().toLocaleString()} - ${message}\n`;
     switch (this.mode) {
       case 'console':
         {
@@ -61,8 +61,8 @@ export class LogService implements LoggerService {
         break;
       case 'file':
         {
-          this.writer.write(data);
-          this.writer.writeError(data);
+          await this.writer.write(data);
+          await this.writer.writeError(data);
         }
         break;
       default:
@@ -70,11 +70,11 @@ export class LogService implements LoggerService {
     }
   }
 
-  warn(message: string) {
+  async warn(message: string) {
     if (this.level.length < 3) {
       return;
     }
-    const data = ` [WARN] ${new Date().toLocaleString()} - ${message}\n`
+    const data = ` [WARN] ${new Date().toLocaleString()} - ${message}\n`;
     switch (this.mode) {
       case 'console':
         {
@@ -83,7 +83,7 @@ export class LogService implements LoggerService {
         break;
       case 'file':
         {
-          this.writer.write(data);
+          await this.writer.write(data);
         }
         break;
       default:
@@ -91,11 +91,11 @@ export class LogService implements LoggerService {
     }
   }
 
-  debug(message: string) {
+  async debug(message: string) {
     if (this.level.length < 4) {
       return;
     }
-    const data = ` [DEBUG] ${new Date().toLocaleString()} - ${message}\n`
+    const data = ` [DEBUG] ${new Date().toLocaleString()} - ${message}\n`;
     switch (this.mode) {
       case 'console':
         {
@@ -104,7 +104,7 @@ export class LogService implements LoggerService {
         break;
       case 'file':
         {
-          this.writer.write(data);
+          await this.writer.write(data);
         }
         break;
       default:
@@ -112,11 +112,11 @@ export class LogService implements LoggerService {
     }
   }
 
-  verbose(message: string) {
+  async verbose(message: string) {
     if (this.level.length < 5) {
       return;
     }
-    const data = `[VERBOSE] ${new Date().toLocaleString()} - ${message}\n`
+    const data = `[VERBOSE] ${new Date().toLocaleString()} - ${message}\n`;
     switch (this.mode) {
       case 'console':
         {
@@ -125,13 +125,11 @@ export class LogService implements LoggerService {
         break;
       case 'file':
         {
-          this.writer.write(data);
+          await this.writer.write(data);
         }
         break;
       default:
         return;
     }
   }
-
-
 }

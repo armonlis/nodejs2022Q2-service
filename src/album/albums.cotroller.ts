@@ -39,7 +39,7 @@ export class AlbumsController {
     if (!result) {
       throw new UnprocessableEntityException('A such artist does not exist.');
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -59,7 +59,7 @@ export class AlbumsController {
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -79,7 +79,7 @@ export class AlbumsController {
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -92,7 +92,7 @@ export class AlbumsController {
   async getAllAlbums(@Request() { url, method, body }, @Response() res: any) {
     const result = await this.albums.getAll();
 
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
@@ -112,7 +112,7 @@ export class AlbumsController {
     if (!result) {
       throw new NotFoundException(`The album with id=${id} is not exist.`);
     }
-    this.logService.log(
+    await this.logService.log(
       `[REQUEST] ${method} ${url} ${JSON.stringify(body)} ---> [RESPONSE] ${
         res.statusCode
       }`,
