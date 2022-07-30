@@ -9,7 +9,7 @@ import {
   ParseUUIDPipe,
   NotFoundException,
   HttpCode,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { ArtistsService } from './artist.service';
 import { CreateArtistDTO } from './DTO/create-artist.dto';

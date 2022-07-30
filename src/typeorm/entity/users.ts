@@ -29,5 +29,4 @@ export class User {
 
   @Column({ nullable: true })
   refresh_token?: string;
-  
 }

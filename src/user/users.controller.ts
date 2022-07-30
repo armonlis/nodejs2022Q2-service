@@ -10,7 +10,7 @@ import {
   ForbiddenException,
   Delete,
   HttpCode,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';

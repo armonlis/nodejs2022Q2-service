@@ -2,20 +2,20 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { LogService } from './log.service';
 import { logger } from 'src/main';
 
-@Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
+@Catch(InternalServerErrorException)
+export class InternallErrorExceptionFilter implements ExceptionFilter {
   private readonly logService: LogService;
   constructor() {
     this.logService = logger;
   }
 
-  catch(exception: HttpException, host: ArgumentsHost) {
+  catch(exception: InternalServerErrorException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse<Response>();
     const req = ctx.getRequest<Request>();
@@ -25,12 +25,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
       error: string;
     };
 
-    this.logService.log(
+    this.logService.error(
       `[REQUEST] ${req.method} ${req.url} ${JSON.stringify(
         req.body,
       )} ---> [RESPONSE] ${exception.getStatus()} (${error}) ${message ?? ''}`,
     );
-
     res.json(exception.getResponse());
   }
 }

@@ -10,13 +10,12 @@ import {
   HttpCode,
   Get,
   UnprocessableEntityException,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/updateAlbum.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-
 
 @Controller('album')
 export class AlbumsController {

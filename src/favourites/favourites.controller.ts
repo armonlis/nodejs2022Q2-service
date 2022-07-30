@@ -7,7 +7,7 @@ import {
   Param,
   ParseUUIDPipe,
   HttpCode,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { FavouritesService } from './favourites.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';

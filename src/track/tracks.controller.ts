@@ -10,7 +10,7 @@ import {
   Delete,
   HttpCode,
   UnprocessableEntityException,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { TracksService } from './tracks.service';
