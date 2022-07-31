@@ -1,72 +1,44 @@
-# Home Library Service
-
-## Prerequisites
-
-- Git - [Download & Install Git](https://git-scm.com/downloads).
-- Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
-
-## Downloading
-
-```
-git clone {repository URL}
-```
-
-## Installing NPM modules
-
-```
-npm install
-```
-
-## Running application
-
-```
-npm start
-```
-
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
-
-## Testing
-
-After application running open new terminal and enter:
-
-To run all tests without authorization
-
-```
-npm run test
-```
-
-To run only one of all test suites
-
-```
-npm run test -- <path to suite>
-```
-
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization
-
-```
-npm run test:auth -- <path to suite>
-```
-
-### Auto-fix and format
-
-```
-npm run lint
-```
-
-```
-npm run format
-```
-
-### Debugging in VSCode
-
-Press <kbd>F5</kbd> to debug.
-
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+# **REST SERVICE.**
+This part contains two parts in one:
+- Authentication and Authorization.
+- Logging & Error Handling.
+___
+## **Authentication and Authorization**
+Clone or download this repository and open the console in its destination.  
+Enter in the console:  
+`npm i` or `npm install`  
+To build image with Postgres enter in the console or skip this part if you have your own one:  
+`docker build -t db -f db.Dockerfile .`  
+To run the Postgres DB enter in the console or run your DB on the port 5000:  
+`docker run --rm -p 5000:5432 db`  
+Then enter in the console:  
+`npm run typeorm migration:run`  
+Then enter in the console:  
+`npm run start:dev` or `npm run build` and `npm run start:prod`  
+Now you can test this application with authorization and authenfication:  
+`npm run test:auth`  
+___
+## **Logging & Error Handling**
+You can use the following options just change the .env file:  
+### LOG_MODE
+- `console` to dispatch logs in the console  
+- `file` to write logs in the files (errors will be written in the others files)  
+### LOG_LEVEL
+- from `0` to `4` in the following sequence "log", "error", "warn", "debug", "verbose"
+### PATH_TO_LOGS
+- the path to your logs folder. Please ended it with /.
+### LOG_FILE_NAME
+- name for your logs files
+### LOGS_MAX_SIZE
+- max size of the files with the logs kB
+### ERROR_FILE_NAME
+- name for your errors files
+### ERRORS_MAX_SIZE
+- max size of the files with the errors kB  
+If you will not change the .env file you will be able to find your logs and errors in the repository_folder/logs/ folder.
+___
+## **Running the application into Docker's container.**
+To run this app with Docker please do following:  
+- change POSTGRES_PORT in the .env file to 5432  
+- change POSTGRES_HOST in the .env file to 100.100.100.4
+- enter in the console `docker-compose up`. Also you can read the README.MD in the develop2 branch for details.
